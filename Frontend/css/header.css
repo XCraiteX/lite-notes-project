@@ -1,0 +1,11 @@
+#logo-in-nav {
+    width: 100px;
+    height: 100px;
+}
+nav {
+    background-color: black;
+    margin: -10;
+}
+header {
+    margin: -10;
+}
