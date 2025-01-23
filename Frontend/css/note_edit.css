@@ -1,0 +1,15 @@
+.note-edit {
+    width: 90%;
+}
+.note-edit textarea {
+    width: 100%;
+    resize: none;
+    background-color: #121212;
+    color: #fff;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: large;
+    height: 50vh;
+}

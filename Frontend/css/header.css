@@ -1,11 +1,41 @@
-#logo-in-nav {
-    width: 100px;
-    height: 100px;
-}
 nav {
     background-color: black;
-    top: 0;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-header {
-    top: 0;
+nav div {
+    display: table-cell;
+    vertical-align: middle;
+}
+nav li {
+    list-style: none;
+    display: table-cell;
+    vertical-align: middle;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+nav li img {
+    width: 50px;
+    height: 50px;
+}
+nav li a {
+    color: #fff;
+    font-size: large;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+#nav-login-btn {
+    background-color: #fff;
+    color: #000;
+    border-radius: 8px;
+    padding: 10px 18px;
+    border: 2px solid #fff;
+    transition: 0.3s;
+}
+#nav-login-btn:hover {
+    background-color: rgba(255, 255, 255, 0);
+    color: #fff;
 }
