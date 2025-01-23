@@ -2,14 +2,29 @@
     width: 90%;
 }
 .note-edit textarea {
-    width: 100%;
+    width: calc(100% - 20px);
     resize: none;
     background-color: #121212;
     color: #fff;
     outline: none;
     border: none;
-    border-radius: 10px;
+    border-radius: 10px 10px 0 0;
     padding: 10px;
     font-size: large;
     height: 50vh;
+}
+
+#note-edit-save-btn {
+    width: 100%;
+    background-color: #181818;
+    border: none;
+    color: #fff;
+    height: 50px;
+    font-size: large;
+    cursor: pointer;
+    border-radius: 0 0 10px 10px;
+    transition: 0.2s;
+}
+#note-edit-save-btn:hover {
+    background-color: #151515;
 }
