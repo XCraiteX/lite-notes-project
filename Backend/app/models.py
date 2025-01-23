@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Mapped, mapped_column, DeclarativeBase
 from sqlalchemy.types import String, Integer
+from sqlalchemy.dialects.postgresql import ARRAY
 from typing import List
 
 class Base(DeclarativeBase):
@@ -17,5 +18,5 @@ class Users(Base):
     __tablename__ = 'users'
 
     login: Mapped[String] = mapped_column(String, primary_key=True)
-    notes: Mapped[List[String]] = mapped_column(List[String])
+    notes: Mapped[List[String]] = mapped_column(ARRAY(String))
     
