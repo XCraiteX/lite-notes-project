@@ -9,14 +9,13 @@ class Base(DeclarativeBase):
 class Logins(Base):
     __tablename__ = 'logins'
     
-    login: Mapped[String] = mapped_column(String, primary_key=True)
-    email: Mapped[String] = mapped_column(String)
+    email: Mapped[String] = mapped_column(String, primary_key=True)
     password: Mapped[String] = mapped_column(String)
 
 
 class Users(Base):
     __tablename__ = 'users'
 
-    login: Mapped[String] = mapped_column(String, primary_key=True)
+    email: Mapped[String] = mapped_column(String, primary_key=True)
     notes: Mapped[List[String]] = mapped_column(ARRAY(String))
     

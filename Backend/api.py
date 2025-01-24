@@ -18,14 +18,15 @@ async def create_note(login: Login):
 
 @app.post('/register')
 async def register(reg: Registration):
-    result = await register_user(reg.login, reg.email, reg.password)
+    result = await register_user(reg.email, reg.password)
     
     return result 
-
-    print(f'login: {reg.login}\nemail: {reg.email}\npassword: {reg.password}')
 
 
 
 @app.post('/login')
 async def login(login: Login):
-    print(f'login: {login.login}\npassword: {login.password}')
+
+    result = await login_user(login.email, login.password)
+
+    return result
