@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::selection{
+  background-color: #fff;
+  color: #000;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', serif;
+  scroll-behavior: smooth;
+}
+
+.main-bg{
+  background: url('/images/main_bg.jpg') fixed center no-repeat;
+}
+
+.background{
+  background-size: cover;
+}
+
+.blur{
+  backdrop-filter: blur(4px);
+}
+
+.mirror{
+  transition: 0.6s;
+}
+
+.mirror:hover{
+  transform: rotate3d(-1, 1, 0.1, 45deg);
+  /* transform: rotateY(45deg); */
+}

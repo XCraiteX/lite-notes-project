@@ -24,6 +24,8 @@ async def register_user(login: str, email: str, password: str):
 
         await db.commit()
 
+        return { 'status': 'OK', 'login': login }
+
 
 async def create_note():
     async with session() as db:
