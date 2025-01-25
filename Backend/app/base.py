@@ -3,6 +3,7 @@ from sqlalchemy import select
 import json
 import asyncpg
 
+from app.settings import *
 from app.models import *
 from app.schemas import *
 from app.protection import * 
@@ -59,11 +60,15 @@ async def login_user(email: str, password: str):
     hashed_password = await hash_password(password)
 
     async with session() as db:
-            
         result = await db.execute(select(Logins).filter(Logins.email == email))
         obj = result.scalars().first()
 
-        return await check_password(password, obj.password)
+        if await check_password(password, obj.password):
+
+            pass
+
+
+
 
 
 async def create_note():

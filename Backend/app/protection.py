@@ -5,7 +5,7 @@ import bcrypt
 SYMBOLS = string.ascii_letters + string.digits
 
 async def generate_key():
-    chars = [SYMBOLS[random.randint(0, len(SYMBOLS))] for x in range(len(SYMBOLS))]    
+    chars = [SYMBOLS[random.randint(0, len(SYMBOLS))] for x in range(KEY_LENGTH)]    
     key = ''.join(chars)
 
     return key 

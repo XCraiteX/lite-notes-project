@@ -11,6 +11,7 @@ class Logins(Base):
     
     email: Mapped[String] = mapped_column(String, primary_key=True)
     password: Mapped[String] = mapped_column(String)
+    session: Mapped[String] = mapped_column(String)
 
 
 class Users(Base):
