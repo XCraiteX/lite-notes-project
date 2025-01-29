@@ -117,7 +117,6 @@ async def login(login: Login, response: Response):
 
     if session:
         response.set_cookie(key='session', value=session, httponly=True)
-        print(response.body)
 
         return {'status': 'OK', 'session': session}
     

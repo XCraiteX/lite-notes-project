@@ -13,17 +13,8 @@ class Logins(Base):
     password: Mapped[String] = mapped_column(String)
     session: Mapped[String] = mapped_column(String)
 
-
 class Notes(Base):
     __tablename__ = 'notes'
 
     key: Mapped[String] = mapped_column(String, primary_key=True)
     email: Mapped[String] = mapped_column(String)
-
-
-# class Users(Base):
-#     __tablename__ = 'users'
-
-#     email: Mapped[String] = mapped_column(String, primary_key=True)
-#     notes: Mapped[List[String]] = mapped_column(ARRAY(String))
-    
