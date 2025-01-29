@@ -31,6 +31,7 @@ async def check_register(email: str, password: str):
 async def register_user(email: str, password: str):
 
     hashed_password = await hash_password(password)
+    session_code = await generate_session_key()
 
     if await check_register(email, password):
         return { 
@@ -39,40 +40,62 @@ async def register_user(email: str, password: str):
             }
 
     async with session() as db:
-        login_obj = Logins(email=email, password=hashed_password)
-        user_obj = Users(email=email, notes=[])
+        login_obj = Logins(email=email, password=hashed_password, session=session_code)
         
-        db.add_all([login_obj, user_obj])
+        db.add_all([login_obj])
 
         await db.commit()
 
-        return { 'status': 'OK' }
+        return { 'status': 'OK', 'details': 'Account successfully registered' }
 
 
 async def login_user(email: str, password: str):
-
-    if not await check_register(email, password):
-        return {
-            'status': 'Error',
-            'details': 'No registered account'
-        }
-
-    hashed_password = await hash_password(password)
-
     async with session() as db:
+
         result = await db.execute(select(Logins).filter(Logins.email == email))
         obj = result.scalars().first()
 
         if await check_password(password, obj.password):
+            return obj.session
 
-            pass
+        return False 
 
-
-
-
-
-async def create_note():
+async def get_session_data(session_id: str):
     async with session() as db:
 
-        pass 
+        result = await db.execute(select(Logins).filter(Logins.session == session_id))
+        user_data = result.scalars().first()
 
+        return user_data
+    
+
+async def check_session_valid(session_id: str) -> bool:
+    user_data = await get_session_data(session_id)
+
+    if user_data:
+        return True
+    
+    return False
+
+
+
+async def create_note(email, name, content):
+
+    id = await generate_note_id()
+
+    with open('data/notes.json', 'r') as f:
+        json_data = json.load(f)
+
+        json_data[id] = { "name": name, "content": content }  
+
+    with open('data/notes.json', 'w') as f:
+        json.dump(json_data, f, indent=4)
+
+
+    async with session() as db:
+        obj = Notes(email=email, key=id)
+        db.add(obj)
+
+        await db.commit()
+
+    return { 'status': 'OK' }

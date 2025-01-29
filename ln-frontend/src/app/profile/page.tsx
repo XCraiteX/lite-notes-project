@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Header from "@/components/Header";
-import LoginForm from "@/components/sections/LoginForm";
+import ProfileSection from "@/components/sections/ProfileSection";
 
 export default function Home() {
   return (
   <>
     <Header/>
-    <LoginForm/>
+    <ProfileSection/>
   </>);
 }

@@ -2,13 +2,22 @@ import string
 import random 
 import bcrypt
 
+from app.settings import *
+
 SYMBOLS = string.ascii_letters + string.digits
 
-async def generate_key():
-    chars = [SYMBOLS[random.randint(0, len(SYMBOLS))] for x in range(KEY_LENGTH)]    
+async def generate_session_key():
+    chars = [SYMBOLS[random.randint(0, len(SYMBOLS)-1)] for _ in range(SESSION_KEY_LENGTH)]    
     key = ''.join(chars)
 
     return key 
+
+async def generate_note_id():
+    chars = [SYMBOLS[random.randint(0, len(SYMBOLS)-1)] for _ in range(NOTE_ID_LENGTH)]    
+    key = ''.join(chars)
+
+    return key 
+
 
 
 async def hash_password(password):

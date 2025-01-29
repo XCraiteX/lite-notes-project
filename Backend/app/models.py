@@ -14,9 +14,16 @@ class Logins(Base):
     session: Mapped[String] = mapped_column(String)
 
 
-class Users(Base):
-    __tablename__ = 'users'
+class Notes(Base):
+    __tablename__ = 'notes'
 
-    email: Mapped[String] = mapped_column(String, primary_key=True)
-    notes: Mapped[List[String]] = mapped_column(ARRAY(String))
+    key: Mapped[String] = mapped_column(String, primary_key=True)
+    email: Mapped[String] = mapped_column(String)
+
+
+# class Users(Base):
+#     __tablename__ = 'users'
+
+#     email: Mapped[String] = mapped_column(String, primary_key=True)
+#     notes: Mapped[List[String]] = mapped_column(ARRAY(String))
     

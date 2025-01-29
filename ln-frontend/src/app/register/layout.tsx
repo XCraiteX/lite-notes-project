@@ -3,6 +3,7 @@ import "../../css/globals.css";
 
 export const metadata: Metadata = {
   title: "Lite Notes Project",
+  icons: "images/logo.svg",
   description: "Lite Notes - Keep your notes in cloud and share it!",
 };
 

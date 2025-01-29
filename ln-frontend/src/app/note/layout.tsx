@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import "../css/globals.css";
+import "../../css/globals.css";
 
 export const metadata: Metadata = {
-  title: "Lite Notes Project",
+  title: "Note Editor - Lite Notes Project",
   icons: "images/logo.svg",
   description: "Lite Notes - Keep your notes in cloud and share it!",
 };
