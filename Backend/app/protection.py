@@ -3,6 +3,7 @@ import random
 import bcrypt
 
 from app.settings import *
+from app.base import *
 
 SYMBOLS = string.ascii_letters + string.digits
 
@@ -17,7 +18,6 @@ async def generate_note_id():
     key = ''.join(chars)
 
     return key 
-
 
 
 async def hash_password(password):
@@ -35,3 +35,4 @@ async def check_password(password, hashed_password):
         return True
     
     return False
+

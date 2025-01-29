@@ -7,6 +7,7 @@ from app.settings import *
 from app.models import *
 from app.schemas import *
 from app.protection import * 
+from app.network import *
 
 engine = create_async_engine(url='postgresql+asyncpg://postgres:password@localhost:5432/postgres')
 session = async_sessionmaker(bind=engine, class_=AsyncSession)
@@ -60,6 +61,7 @@ async def login_user(email: str, password: str):
 
         return False 
 
+
 async def get_session_data(session_id: str):
     async with session() as db:
 
@@ -67,26 +69,50 @@ async def get_session_data(session_id: str):
         user_data = result.scalars().first()
 
         return user_data
+
+async def get_notes_json_data():
+
+    with open('data/notes.json', 'r') as f:
+        json_data = json.load(f)
+
+        return json_data
+
+async def get_notes_names(email: str):
+
+    async with session() as db:
+
+        result = await db.execute(select(Notes).filter(Notes.email == email))        
+        objects = result.scalars().all()
+
+    notes = []
+
+    json_data = await get_notes_json_data()
+
+    for obj in objects:
+        note = json_data[obj.key]
+        note['key'] = obj.key 
+
+        notes.append(note)
+   
+    return { 'status': 'OK', 'notes': notes }
     
 
-async def check_session_valid(session_id: str) -> bool:
-    user_data = await get_session_data(session_id)
-
-    if user_data:
-        return True
+async def get_note_data_by_id(note_id, owner):
     
-    return False
+    json_data = await get_notes_json_data()
 
+    note = json_data[note_id]
+
+    return { 'status': 'OK', 'name': note['name'], 'content': note['content'], 'owner':  owner}
 
 
 async def create_note(email, name, content):
 
     id = await generate_note_id()
 
-    with open('data/notes.json', 'r') as f:
-        json_data = json.load(f)
+    json_data = await get_notes_json_data()
 
-        json_data[id] = { "name": name, "content": content }  
+    json_data[id] = { "name": name, "content": content }  
 
     with open('data/notes.json', 'w') as f:
         json.dump(json_data, f, indent=4)
@@ -99,3 +125,16 @@ async def create_note(email, name, content):
         await db.commit()
 
     return { 'status': 'OK' }
+
+
+async def edit_note(note_id, new_data: Note):
+
+    json_data = await get_notes_json_data()
+
+    json_data[note_id]['name'] = new_data.name
+    json_data[note_id]['content'] = new_data.content
+
+    with open('data/notes.json', 'w') as f:
+        json.dump(json_data, f, indent=4)
+
+        return { 'status': 'OK', 'details': 'Successfully saved' }
