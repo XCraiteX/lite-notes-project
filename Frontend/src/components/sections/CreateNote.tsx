@@ -12,7 +12,7 @@ export default function CreateNote(){
 
     console.log(note_id)
     
-    const create_note = async (event) => {
+    const create_note = async (event: React.FormEvent) => {
         event.preventDefault();
 
         const note_name_input = document.querySelector('#note_name') as HTMLInputElement;

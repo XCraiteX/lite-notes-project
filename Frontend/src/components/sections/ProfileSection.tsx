@@ -4,6 +4,12 @@ import axios from "axios"
 import React, { useState, useEffect } from 'react'
 import { API_URL } from '../config';
 
+interface Note{
+    key: string,
+    name: string,
+    content: string
+}
+
 export default function ProfileSection(){
 
     const [notes, setNotes] = useState([])
@@ -34,7 +40,7 @@ export default function ProfileSection(){
         }
     }, [isAuthorized])
 
-    const Logout = async (event) => {
+    const Logout = async (event: React.FormEvent) => {
         const response = await axios.get(API_URL + '/logout', { withCredentials: true })
 
         if (response.data.status == 'OK'){
@@ -61,7 +67,7 @@ export default function ProfileSection(){
         <section className="flex w-full">
             <div className="flex p-[22px] w-full justify-center items-center flex-col">
                 <div className="flex justify-center w-[60%] flex-col gap-[12px]">
-                    {notes.map((note) => (
+                    {notes.map((note: Note) => (
                         <NoteCard key={note.key}
                             name={note.name}
                             link={'/note?id=' + note.key}/>

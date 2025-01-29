@@ -33,7 +33,7 @@ export default function NoteEditor(){
         .catch(() => {})
     }, [])
 
-    const UpdateNote = async (event) => {
+    const UpdateNote = async (event: React.FormEvent) => {
         const name_elem = document.querySelector('#note_name') as HTMLInputElement
         const content_elem = document.querySelector('#note_content') as HTMLInputElement
         const status_info = document.querySelector('#status') as HTMLElement
