@@ -1,52 +1,67 @@
-'use client'
-import React, { useState, useEffect, Suspense } from 'react'
-import axios from 'axios'
-import { useSearchParams } from "next/navigation";
-import { API_URL } from '../config';
+# [ Lite Notes ]
+
+**Lite Notes - A simple platform for creating and sharing your notes**
+
+## Stack
+### Backend
+
+- **FastAPI** - API with CORS 
+- **SQLAlchemy** - ORM for DB management
+- **bcrypt** - Password and session hashing
+
+### Data Storage
+
+- **PostgreSQL + asyncpg** - Main database 
+- **JSON** - Storage for notes
+
+### Frontend
+
+- **NEXT** - Routing and design
+- **React** - useState & useEffect
+- **Tailwind & Css** - Style
+- **Axios** - Http requests into backend
+
+### Other
+
+- **Git** - For comfortable developing
+- **Docker** - For containers
+- **Compose** - Fast project deploy 
 
 
+## Installation
 
-function AllData()
+### 1. Clone the repository
+```bash
+git clone https://github.com/XCraiteX/lite-notes-project.git
+```
 
-export default function CreateNote(){
+### 2. Install all dependencies
+```bash
+# Backend
+cd Backend
+pip install -r requirements.txt
 
-    const searchParams = useSearchParams();
-    const note_id = searchParams.get('id');
+# Frontend
+cd Frontend
+npm install 
+npm i axios
+```
 
-    console.log(note_id)
-    
-    const create_note = async (event: React.FormEvent) => {
-        event.preventDefault();
+### 3. Deploy project
+```bash
+docker compose up --build
+```
 
-        const note_name_input = document.querySelector('#note_name') as HTMLInputElement;
-        const note_name = note_name_input.value;
+## Smalls
 
-        const note_content_input = document.querySelector('#note_content') as HTMLInputElement;
-        const note_content = note_content_input.value;
+### 1. Registration - Login - Logout
+**Registration and login are implemented by saving the session ID and storing the session itself on the server.
+Logout - Just delete cookies.**
 
-        const data = { name: note_name, content: note_content };
-        const response = await axios.post(API_URL + '/create_note', data, { withCredentials: true });
+### 2. Notes Management
+- **Creating** - You can create an unlimited number of notes with a title and content.
+- **Edit** - You can edit and share notes very easily.
+- **Share** - You can share your notes, and only you can change them.
 
-        if (response.data.status == "OK"){
-            window.location.replace('../profile')
-        }
-        console.log(response.data);
-    }
-    
-    
-    return(
-        <Suspense>
-        <section className="w-full flex min-h-[100vh] bg-[#161616]">
-            <div className="w-full mt-[6vh] p-[26px]">
-                <div className="w-full flex flex-col text-white gap-[12px]">
-                    <div className="flex gap-[20px] items-center w-full">
-                        <input id="note_name" className="min-w-[20%] max-w-[30%] p-[4px] bg-[#040404] text-[1.2em] outline-none rounded-[6px]" type="text" placeholder="Title"/>
-                        <button onClick={create_note} className="rounded-[6px] bg-[#323232] px-[22px] py-[6px] duration-[0.2s] hover:bg-[#424242]">Save</button>
-                    </div>
-
-                    <textarea id="note_content" className="bg-[#040404] h-[80vh] p-[8px] outline-none rounded-[12px]"></textarea>
-                </div>
-            </div>
-        </section></Suspense>
-    )
-}
+### 3. Smart render
+**The authorization and profile buttons are rendered only after receiving the login status.**
