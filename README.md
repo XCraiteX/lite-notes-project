@@ -2,6 +2,8 @@
 
 **Lite Notes - A simple platform for creating and sharing your notes**
 
+<img src='https://i.imgur.com/O1AK0cm.png'>
+
 ## Stack
 ### Backend
 
