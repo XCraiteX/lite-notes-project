@@ -5,7 +5,7 @@ import { API_URL } from '../config';
 
 export default function RegisterForm(){
 
-    const Register = async (event) => {
+    const Register = async (event: React.FormEvent) => {
         event.preventDefault();
         try{
             const email_input = document.querySelector('#email-input') as HTMLInputElement

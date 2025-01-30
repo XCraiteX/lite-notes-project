@@ -1,5 +1,6 @@
 FROM python:3.12.7-slim
-WORKDIR .
+WORKDIR /app 
+COPY ./requirements.txt /app/requirements.txt
 COPY . .
 RUN pip install -r requirements.txt
-CMD ['uvicorn', 'api:app', '--port', '3800']
+CMD ["uvicorn", "app.api:app", "--host", "0.0.0.0", "--port", "3800"]

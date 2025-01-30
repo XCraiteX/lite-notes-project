@@ -1,12 +1,11 @@
 'use client'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import axios from 'axios'
 import { useSearchParams } from "next/navigation";
 import { API_URL } from '../config';
 
-
-export default function CreateNote(){
-
+function AllData(){
+    
     const searchParams = useSearchParams();
     const note_id = searchParams.get('id');
 
@@ -29,8 +28,7 @@ export default function CreateNote(){
         }
         console.log(response.data);
     }
-    
-    
+
     return(
         <section className="w-full flex min-h-[100vh] bg-[#161616]">
             <div className="w-full mt-[6vh] p-[26px]">
@@ -44,5 +42,13 @@ export default function CreateNote(){
                 </div>
             </div>
         </section>
+    )
+}
+
+export default function CreateNote(){
+    return(
+        <Suspense>
+            <AllData/>
+        </Suspense>
     )
 }

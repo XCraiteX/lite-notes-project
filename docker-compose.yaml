@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres-container
+    environment:
+      - POSTGRES_USER=postgres 
+      - POSTGRES_PASSWORD=password 
+      - POSTGRES_DB=postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - .postgres:/data/postgres
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: ./Dockerfile
+    container_name: backend-container 
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_HOST_NAME=postgres
+      - DATABASE_URL=postgresql+asyncpg://postgres:password@postgres:5432/postgres
+    ports:
+      - 3800:3800
+    depends_on:
+      - postgres
+
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: ./Dockerfile
+    container_name: frontend-container 
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend 
+
+volumes:
+  postgres:

@@ -2,14 +2,16 @@ from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, Asyn
 from sqlalchemy import select
 import json
 import asyncpg
+import asyncio
+from time import sleep
 
-from app.settings import *
-from app.models import *
-from app.schemas import *
-from app.protection import * 
-from app.network import *
+from app.main.settings import *
+from app.main.models import *
+from app.main.schemas import *
+from app.main.protection import * 
+from app.main.network import *
 
-engine = create_async_engine(url='postgresql+asyncpg://postgres:password@localhost:5432/postgres')
+engine = create_async_engine(url='postgresql+asyncpg://postgres:password@postgres:5432/postgres')
 session = async_sessionmaker(bind=engine, class_=AsyncSession)
 
 async def create_tables():
@@ -72,7 +74,7 @@ async def get_session_data(session_id: str):
 
 async def get_notes_json_data():
 
-    with open('data/notes.json', 'r') as f:
+    with open('app/data/notes.json', 'r') as f:
         json_data = json.load(f)
 
         return json_data
@@ -114,7 +116,7 @@ async def create_note(email, name, content):
 
     json_data[id] = { "name": name, "content": content }  
 
-    with open('data/notes.json', 'w') as f:
+    with open('app/data/notes.json', 'w') as f:
         json.dump(json_data, f, indent=4)
 
 
@@ -134,7 +136,7 @@ async def edit_note(note_id, new_data: Note):
     json_data[note_id]['name'] = new_data.name
     json_data[note_id]['content'] = new_data.content
 
-    with open('data/notes.json', 'w') as f:
+    with open('app/data/notes.json', 'w') as f:
         json.dump(json_data, f, indent=4)
 
         return { 'status': 'OK', 'details': 'Successfully saved' }

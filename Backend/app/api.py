@@ -2,9 +2,9 @@ from fastapi import FastAPI, Request
 from fastapi.responses import Response, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.base import *
-from app.schemas import *
-from app.protection import *
+from app.main.base import *
+from app.main.schemas import *
+from app.main.protection import *
 
 origins = [
     "http://localhost:3000",  
@@ -22,6 +22,7 @@ app.add_middleware(
 
 @app.on_event('startup')
 async def startup():
+    print('Started!')
     await create_tables()
 
 

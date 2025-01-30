@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect, use } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import axios from 'axios'
 import { useSearchParams } from "next/navigation";
 import { API_URL } from '../config';
@@ -10,8 +10,7 @@ type Note = {
     owner: boolean
 }
 
-export default function NoteEditor(){
-
+function AllData(){
     const [name, setName] = useState('')
     const [content, setContent] = useState('')
     const [owner, setOwner] = useState(false)
@@ -42,11 +41,10 @@ export default function NoteEditor(){
         const response = await axios.put(API_URL + '/edit_note?id=' + note_id, data, { withCredentials: true })
 
         status_info.textContent = response.data.details + '!'
-
-        console.log(response.data)
     }
     
     return(
+        <Suspense>
         <section className="w-full flex min-h-[100vh] bg-[#161616]">
             <div className="w-full mt-[6vh] p-[26px]">
                 { !owner && (<div className='fixed bg-black/0 w-full h-full z-500'></div>) }
@@ -62,6 +60,14 @@ export default function NoteEditor(){
                     <textarea value={content} onChange={e => setContent(e.target.value)} id="note_content" className="bg-[#040404] h-[80vh] p-[8px] outline-none rounded-[12px]"></textarea>
                 </div>
             </div>
-        </section>
+        </section></Suspense>
+    )
+}
+
+export default function NoteEditor(){
+    return(
+        <Suspense>
+            <AllData/>
+        </Suspense>
     )
 }

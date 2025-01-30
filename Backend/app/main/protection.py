@@ -2,8 +2,8 @@ import string
 import random 
 import bcrypt
 
-from app.settings import *
-from app.base import *
+from app.main.settings import *
+from app.main.base import *
 
 SYMBOLS = string.ascii_letters + string.digits
 
