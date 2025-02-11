@@ -8,8 +8,6 @@ function AllData(){
     
     const searchParams = useSearchParams();
     const note_id = searchParams.get('id');
-
-    console.log(note_id)
     
     const create_note = async (event: React.FormEvent) => {
         event.preventDefault();
